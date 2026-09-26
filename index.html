@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dean Ohana Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F5F6F3;--surface:#FFFFFF;--ink:#17201E;--muted:#5B6662;--line:#CFD6D0;
+  --accent:#D65A1F;--accent-ink:#FFFFFF;--sea:#1E6A72;--sea-soft:#E1EFEF;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#111816;--surface:#18211F;--ink:#E8ECE9;--muted:#9AA7A2;--line:#34403C;
+  --accent:#F08045;--accent-ink:#1A0F08;--sea:#6FB9C0;--sea-soft:#172E30;}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--bg:#111816;--surface:#18211F;--ink:#E8ECE9;--muted:#9AA7A2;--line:#34403C;
+  --accent:#F08045;--accent-ink:#1A0F08;--sea:#6FB9C0;--sea-soft:#172E30;}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Public Sans",system-ui,sans-serif;padding-inline:16px}
+.wrap{max-width:680px;margin:0 auto;padding-block:40px 64px}
+h1,h2{font-family:"Archivo",system-ui,sans-serif;text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(26px,6vw,36px);font-weight:800}
+h2{font-size:19px;font-weight:700}
+.eyebrow{font:600 12px/1 "Archivo",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.intro{background:var(--sea-soft);border-radius:10px;padding:20px;margin-top:20px;display:grid;gap:10px}
+.intro p{margin:0}
+form{display:grid;gap:36px;margin-top:36px}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:18px}
+legend{padding:0;margin-bottom:18px;display:grid;gap:4px}
+legend span{color:var(--muted);font-size:14px}
+label{display:grid;gap:6px;font-weight:600;font-size:15px}
+label small{font-weight:400;color:var(--muted)}
+input,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;width:100%;box-sizing:border-box}
+textarea{min-height:76px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.actions{position:sticky;bottom:0;background:var(--bg);padding-block:14px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button:disabled{opacity:.6;cursor:default}
+button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--accent-ink);border:0;border-radius:6px;padding:12px 18px;cursor:pointer}
+#status{color:var(--muted);font-size:14px}
+#fallback{min-height:160px}
+.thanks{margin-top:36px;background:var(--sea-soft);border-left:4px solid var(--sea);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
+.thanks h2{color:var(--sea)}
+.thanks p{margin:0}
+@media (max-width:480px){.pair{grid-template-columns:1fr}}
+</style>
+</head><body>
+<div class="wrap">
+  <div class="eyebrow">Dean Ohana Rentals × Callie Rounds</div>
+  <h1 style="margin-top:10px">A few questions for Mike and Nicole</h1>
+  <div class="intro">
+    <p>Mahalo for taking the time to chat, Mike and Nicole. These questions help me work out how many more bookings the ads could realistically bring in and what that would mean for both of us.</p>
+    <p>Rough numbers are completely fine and you can skip anything you're not sure about. When you're done, tap "Send to Callie" at the bottom and your answers will come straight to me. Your answers save as you go on this device, so you can close the page and come back to finish later.</p>
+  </div>
+
+  <form id="ws">
+    <fieldset>
+      <legend><h2>What I already know</h2><span>I filled these in from your website. Anything in brackets is my best guess, so please change it if it's wrong.</span></legend>
+      <div class="pair">
+        <label for="broncos">Ford Broncos<input id="broncos" value="(9)"></label>
+        <label for="jeeps">Jeep Wranglers<input id="jeeps" value="(3)"></label>
+      </div>
+      <label for="rates">Daily rates<input id="rates" value="($129 to $159 a day, depending on the vehicle)"></label>
+      <label for="discounts">Current discounts<input id="discounts" value="(10% off 5+ day rentals, and 10% off for military and first responders)"></label>
+      <label for="included">Included with every rental<input id="included" value="(Unlimited miles, 2 beach chairs, 2 snorkel sets, a cooler and 2 boogie boards)"></label>
+      <label for="parking">Parking<input id="parking" value="(Free parking at two Waikiki locations)"></label>
+      <label for="age">Minimum renter age<input id="age" value="(21)"></label>
+      <label for="booking">How customers book<input id="booking" value="(Directly through your website, with phone and text support)"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>How busy you are</h2><span>This shows how much room there is to grow.</span></legend>
+      <div class="pair">
+        <label for="busyday">Vehicles out on a typical busy-season day<input id="busyday"></label>
+        <label for="slowday">Vehicles out on a typical slow-season day<input id="slowday"></label>
+      </div>
+      <label for="length">Average length of a rental, in days<input id="length"></label>
+      <label for="months">Your busiest months and your slowest months<input id="months"></label>
+      <label for="turnaway">In busy season, how often do you have to turn customers away because every vehicle is already booked?<input id="turnaway"></label>
+      <label for="otherlistings">Do you also list on Turo or any other rental sites, and roughly what share of your bookings come through them?<input id="otherlistings"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>Your booking records</h2><span>This is the most useful part, because it shows exactly how many days each vehicle sits empty. You can upload screenshots or an export from your booking system at the bottom of this section.</span></legend>
+      <label for="calendar">Could you share a view-only link to your booking calendar?<small>If a link isn't easy, a screenshot of each month from the last year works just as well.</small><input id="calendar" placeholder="Paste the link here, or write &quot;sending screenshots&quot;"></label>
+      <label for="monthly">Roughly how many bookings and how much revenue did you have in each of the last 12 months?<small>An export from your booking system is perfect if you have one, and you can simply write "attached" here.</small><textarea id="monthly"></textarea></label>
+      <label for="files">Upload calendar screenshots or booking exports<small>Optional. Photos, PDFs or spreadsheets, up to 10 MB in total.</small><input type="file" id="files" name="attachment" multiple accept="image/*,.pdf,.csv,.xls,.xlsx,.numbers"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>What a booking is worth</h2><span>This tells us what each extra booking the ads bring in is worth to you.</span></legend>
+      <label for="costs">Your costs on a typical booking<small>For example cleaning, fuel, insurance, vehicle payments, gear, card and booking fees.</small><textarea id="costs"></textarea></label>
+      <label for="net">Roughly what you keep from a booking after those costs<input id="net" placeholder="$"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>Who rents from you</h2><span>This helps me aim the ads at the right people.</span></legend>
+      <label for="split">Roughly what share of customers are tourists, and what share are locals?<input id="split" placeholder="e.g. 80% tourists, 20% locals"></label>
+      <label for="sources">How do people find you before they book on your website?<small>For example Google, Instagram, hotels, repeat customers or word of mouth.</small><textarea id="sources"></textarea></label>
+      <label for="edge">Of everything you include, what do customers love most in their reviews?<textarea id="edge"></textarea></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>Running the ads</h2><span>This helps us set things up in a way that works for you.</span></legend>
+      <label for="pastads">For the ads you've run before, where did you run them, roughly how much did you spend, and how did they go?<textarea id="pastads"></textarea></label>
+      <label for="budget">A monthly ad budget you'd feel comfortable testing with<input id="budget" placeholder="$"></label>
+      <label for="contact">For enquiries from the ads, would you rather get a WhatsApp message, an Instagram DM, or a short form?<input id="contact"></label>
+      <label for="replies">Who answers enquiries, and how quickly can you usually reply?<input id="replies"></label>
+      <label for="offer">Is there an offer you'd be happy to run for customers, like rent 4 days and get the 5th free, or something else?<textarea id="offer"></textarea></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>Anything else</h2></legend>
+      <label for="other">Anything you'd like me to know, or any questions for me<textarea id="other"></textarea></label>
+    </fieldset>
+
+    <input type="text" name="_honey" id="honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <div class="actions">
+      <button type="submit" id="send">Send to Callie</button>
+      <span id="status" role="status"></span>
+    </div>
+  </form>
+
+  <div class="thanks" id="thanks" hidden tabindex="-1">
+    <h2>Mahalo, Mike and Nicole!</h2>
+    <p>Your answers are on their way to me. Thank you so much for taking the time to fill this out.</p>
+    <p>I'll go through everything and come back to you with the numbers and a proposal for what the first month could look like.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('ws'),status=document.getElementById('status'),btn=document.getElementById('send');
+  var fileInput=document.getElementById('files');
+  var fields=[].slice.call(form.querySelectorAll('input:not([type=file]):not(#honey),textarea'));
+  var KEY='dean-ohana-worksheet';
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');fields.forEach(function(f){if(saved[f.id])f.value=saved[f.id];});}catch(e){}
+  form.addEventListener('input',function(){
+    try{var d={};fields.forEach(function(f){d[f.id]=f.value;});localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+  });
+  function q(f){var lab=f.closest('label');return lab?lab.childNodes[0].textContent.trim():f.id;}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var files=fileInput.files,total=0;
+    for(var i=0;i<files.length;i++)total+=files[i].size;
+    if(total>10*1024*1024){status.textContent='Those files add up to more than 10 MB. Please upload fewer or smaller files.';return;}
+    var fd=new FormData();
+    fd.append('_subject','Dean Ohana Rentals: answers for Callie');
+    fd.append('_template','table');
+    fd.append('_captcha','false');
+    fd.append('_honey',document.getElementById('honey').value);
+    fields.forEach(function(f){fd.append(q(f),f.value.trim()||'(skipped)');});
+    for(var j=0;j<files.length;j++)fd.append('attachment'+(j+1),files[j],files[j].name);
+    btn.disabled=true;btn.textContent='Sending...';status.textContent='';
+    fetch('https://formsubmit.co/ajax/callierounds@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:fd})
+      .then(function(r){return r.json().catch(function(){return{};}).then(function(j){if(!r.ok||String(j.success)!=='true')throw new Error(j.message||'send failed');});})
+      .then(function(){
+        try{localStorage.removeItem(KEY);}catch(e){}
+        form.hidden=true;var th=document.getElementById('thanks');th.hidden=false;window.scrollTo({top:0,behavior:'smooth'});th.focus({preventScroll:true});
+      })
+      .catch(function(){
+        btn.disabled=false;btn.textContent='Send to Callie';
+        status.textContent='Something went wrong sending your answers. They are still saved here, so please try again in a minute.';
+      });
+  });
+})();
+</script>
+
+</body></html>
