@@ -36,7 +36,6 @@ input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px soli
 button:disabled{opacity:.6;cursor:default}
 button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--accent-ink);border:0;border-radius:6px;padding:12px 18px;cursor:pointer}
 #status{color:var(--muted);font-size:14px}
-#fallback{min-height:160px}
 .thanks{margin-top:36px;background:var(--sea-soft);border-left:4px solid var(--sea);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
 .thanks h2{color:var(--sea)}
 .thanks p{margin:0}
@@ -79,10 +78,9 @@ button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--a
     </fieldset>
 
     <fieldset>
-      <legend><h2>Your booking records</h2><span>This is the most useful part, because it shows exactly how many days each vehicle sits empty. You can upload screenshots or an export from your booking system at the bottom of this section.</span></legend>
-      <label for="calendar">Could you share a view-only link to your booking calendar?<small>If a link isn't easy, a screenshot of each month from the last year works just as well.</small><input id="calendar" placeholder="Paste the link here, or write &quot;sending screenshots&quot;"></label>
-      <label for="monthly">Roughly how many bookings and how much revenue did you have in each of the last 12 months?<small>An export from your booking system is perfect if you have one, and you can simply write "attached" here.</small><textarea id="monthly"></textarea></label>
-      <label for="files">Upload calendar screenshots or booking exports<small>Optional. Photos, PDFs or spreadsheets, up to 10 MB in total.</small><input type="file" id="files" name="attachment" multiple accept="image/*,.pdf,.csv,.xls,.xlsx,.numbers"></label>
+      <legend><h2>Your booking records</h2><span>This is the most useful part, because it shows exactly how many days each vehicle sits empty.</span></legend>
+      <label for="calendar">Could you share a view-only link to your booking calendar?<input id="calendar" placeholder="Paste the link here"></label>
+      <label for="monthly">Roughly how many bookings and how much revenue did you have in each of the last 12 months?<textarea id="monthly"></textarea></label>
     </fieldset>
 
     <fieldset>
@@ -129,7 +127,6 @@ button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--a
 <script>
 (function(){
   var form=document.getElementById('ws'),status=document.getElementById('status'),btn=document.getElementById('send');
-  var fileInput=document.getElementById('files');
   var fields=[].slice.call(form.querySelectorAll('input:not([type=file]):not(#honey),textarea'));
   var KEY='dean-ohana-worksheet';
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');fields.forEach(function(f){if(saved[f.id])f.value=saved[f.id];});}catch(e){}
@@ -139,16 +136,12 @@ button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--a
   function q(f){var lab=f.closest('label');return lab?lab.childNodes[0].textContent.trim():f.id;}
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var files=fileInput.files,total=0;
-    for(var i=0;i<files.length;i++)total+=files[i].size;
-    if(total>10*1024*1024){status.textContent='Those files add up to more than 10 MB. Please upload fewer or smaller files.';return;}
     var fd=new FormData();
     fd.append('_subject','Dean Ohana Rentals: answers for Callie');
     fd.append('_template','table');
     fd.append('_captcha','false');
     fd.append('_honey',document.getElementById('honey').value);
     fields.forEach(function(f){fd.append(q(f),f.value.trim()||'(skipped)');});
-    for(var j=0;j<files.length;j++)fd.append('attachment'+(j+1),files[j],files[j].name);
     btn.disabled=true;btn.textContent='Sending...';status.textContent='';
     fetch('https://formsubmit.co/ajax/callierounds@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:fd})
       .then(function(r){return r.json().catch(function(){return{};}).then(function(j){if(!r.ok||String(j.success)!=='true')throw new Error(j.message||'send failed');});})
