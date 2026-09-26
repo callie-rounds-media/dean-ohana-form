@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><head><meta charset="utf-8"><meta name="referrer" content="no-referrer-when-downgrade"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Dean Ohana Questions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;600&display=swap">
@@ -36,7 +36,7 @@ input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px soli
 button:disabled{opacity:.6;cursor:default}
 button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--accent-ink);border:0;border-radius:6px;padding:12px 18px;cursor:pointer}
 #status{color:var(--muted);font-size:14px}
-.thanks{margin-top:36px;background:var(--sea-soft);border-left:4px solid var(--sea);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
+.thanks{margin-top:24px;background:var(--sea-soft);border-left:4px solid var(--sea);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
 .thanks h2{color:var(--sea)}
 .thanks p{margin:0}
 @media (max-width:480px){.pair{grid-template-columns:1fr}}
@@ -48,6 +48,12 @@ button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--a
   <div class="intro">
     <p>Mahalo for taking the time to chat, Mike and Nicole. These questions help me work out how many more bookings the ads could realistically bring in and what that would mean for both of us.</p>
     <p>Rough numbers are completely fine and you can skip anything you're not sure about. When you're done, tap "Send to Callie" at the bottom and your answers will come straight to me. Your answers save as you go on this device, so you can close the page and come back to finish later.</p>
+  </div>
+
+  <div class="thanks" id="thanks" hidden tabindex="-1">
+    <h2>Mahalo, Mike and Nicole!</h2>
+    <p>Your answers are on their way to me. Thank you so much for taking the time to fill this out. If you think of anything else, you can change your answers below and tap "Send updated answers".</p>
+    <p>I'll go through everything and come back to you with the numbers and a proposal for what the first month could look like.</p>
   </div>
 
   <form id="ws">
@@ -110,48 +116,49 @@ button{font:700 15px "Archivo",sans-serif;background:var(--accent);color:var(--a
       <label for="other">Anything you'd like me to know, or any questions for me<textarea id="other"></textarea></label>
     </fieldset>
 
-    <input type="text" name="_honey" id="honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
     <div class="actions">
       <button type="submit" id="send">Send to Callie</button>
       <span id="status" role="status"></span>
     </div>
   </form>
 
-  <div class="thanks" id="thanks" hidden tabindex="-1">
-    <h2>Mahalo, Mike and Nicole!</h2>
-    <p>Your answers are on their way to me. Thank you so much for taking the time to fill this out.</p>
-    <p>I'll go through everything and come back to you with the numbers and a proposal for what the first month could look like.</p>
-  </div>
 </div>
 
 <script>
 (function(){
-  var form=document.getElementById('ws'),status=document.getElementById('status'),btn=document.getElementById('send');
-  var fields=[].slice.call(form.querySelectorAll('input:not([type=file]):not(#honey),textarea'));
-  var KEY='dean-ohana-worksheet';
+  var form=document.getElementById('ws'),status=document.getElementById('status'),btn=document.getElementById('send'),th=document.getElementById('thanks');
+  var fields=[].slice.call(form.querySelectorAll('input,textarea'));
+  var KEY='dean-ohana-worksheet',sent=false;
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');fields.forEach(function(f){if(saved[f.id])f.value=saved[f.id];});}catch(e){}
   form.addEventListener('input',function(){
     try{var d={};fields.forEach(function(f){d[f.id]=f.value;});localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
   });
+  // Return in a one-line box moves to the next question instead of sending the form.
+  form.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'||e.target.tagName!=='INPUT')return;
+    e.preventDefault();
+    var i=fields.indexOf(e.target);
+    if(i>-1&&i<fields.length-1)fields[i+1].focus();else btn.focus();
+  });
   function q(f){var lab=f.closest('label');return lab?lab.childNodes[0].textContent.trim():f.id;}
   form.addEventListener('submit',function(e){
     e.preventDefault();
+    if(e.submitter&&e.submitter!==btn)return;
     var fd=new FormData();
-    fd.append('_subject','Dean Ohana Rentals: answers for Callie');
+    fd.append('_subject',sent?'Dean Ohana Rentals: UPDATED answers for Callie':'Dean Ohana Rentals: answers for Callie');
     fd.append('_template','table');
     fd.append('_captcha','false');
-    fd.append('_honey',document.getElementById('honey').value);
     fields.forEach(function(f){fd.append(q(f),f.value.trim()||'(skipped)');});
     btn.disabled=true;btn.textContent='Sending...';status.textContent='';
-    fetch('https://formsubmit.co/ajax/callierounds@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:fd})
+    fetch('https://formsubmit.co/ajax/callierounds@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:fd,referrer:location.href,referrerPolicy:'unsafe-url'})
       .then(function(r){return r.json().catch(function(){return{};}).then(function(j){if(!r.ok||String(j.success)!=='true')throw new Error(j.message||'send failed');});})
       .then(function(){
-        try{localStorage.removeItem(KEY);}catch(e){}
-        form.hidden=true;var th=document.getElementById('thanks');th.hidden=false;window.scrollTo({top:0,behavior:'smooth'});th.focus({preventScroll:true});
+        sent=true;btn.disabled=false;btn.textContent='Send updated answers';
+        th.hidden=false;window.scrollTo({top:0,behavior:'smooth'});th.focus({preventScroll:true});
       })
       .catch(function(){
-        btn.disabled=false;btn.textContent='Send to Callie';
-        status.textContent='Something went wrong sending your answers. They are still saved here, so please try again in a minute.';
+        btn.disabled=false;btn.textContent=sent?'Send updated answers':'Send to Callie';
+        status.textContent='Your answers didn\'t send, but they are still saved on this page. Please try again in a minute, or open this page in Safari or Chrome.';
       });
   });
 })();
